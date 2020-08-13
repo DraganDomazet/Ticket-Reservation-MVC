@@ -1,0 +1,437 @@
+﻿@using WebProject.Models
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Admin</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta name="description" content="The description of my page" />
+</head>
+<body style="background-color: antiquewhite; background-repeat: no-repeat; background-size: cover; margin: 10px;">
+    <div class="container-fluid btn-toolbar" style="margin-right:5px">
+        <a href="/Admin/Logout" class="btn btn-danger pull-right" style="margin-left:5px"><span class="glyphicon glyphicon-log-out"></span> Log out </a>
+        <a href="/Admin/Tickets" class="btn btn-primary pull-right" style="margin-left:5px"><span class="glyphicon glyphicon-info-sign"></span> Show all tickets </a>
+        <a href="/Admin/Comments" class="btn btn-warning pull-right" style="margin-left:5px"><span class="glyphicon glyphicon-info-sign"></span> Show all comments </a>
+        <a href="/Admin/ShowCustomers" class="btn btn-info pull-right"><span class="glyphicon glyphicon-info-sign"></span> Show all customers </a>
+        <a href="/Admin/ShowSellers" class="btn btn-primary pull-right"><span class="glyphicon glyphicon-info-sign"></span> Show all sellers </a>
+        <a href="/Admin/Index" class="btn btn-default pull-left"><span class="glyphicon glyphicon-home"></span> Home </a>
+        <a href="/Admin/Edit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-edit"></span> Edit </a>
+        <a href="/Admin/AddS" class="btn btn-warning pull-right"><span class="glyphicon glyphicon-plus-sign"></span> Add Seller </a>
+        <a href="/Admin/Show" class="btn btn-info pull-right"><span class="glyphicon glyphicon-calendar"></span> Show all manifestations </a>
+
+    </div>
+    <h2 class="text-info text-right">Welcome, @(((User)Session["user"]).Name) @(((User)Session["user"]).Surname)</h2>
+    @{ if (ViewBag.Error != null)
+        {
+            <h3 class="text-danger text-center">@ViewBag.Error</h3>
+        }}
+
+    @{  if (ViewBag.Seller != null)
+        {
+            <h3 class="text-primary text-center">User with username: @ViewBag.Seller has been added!</h3>
+
+        }
+    }
+
+    @{ if (ViewBag.Show != null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 style="margin-top:10px">Manifestations:</h3>
+                        @{ foreach (var item in ViewBag.Fests)
+                            {
+                                <form method="post" action="/Admin/Activate">
+                                    <table style="background-color:white; width:100%; border:solid; border-color:darkgray; margin-top:2px">
+                                        <tr>
+                                            <td width="400">
+                                                <p>@item.Type: @item.Name  <text class="pull-right"> Price: @item.Price</text></p><p>
+                                                    Address: @item.Address.Street @item.Address.Number
+                                                    <text class="pull-right">Status: @item.Status</text>
+                                                </p><p>Date: @item.DateTime</p>
+                                            </td>
+                                            <td width="140">
+                                                <img class="img-rounded" src="~/Images/@item.Picture" width="130" height="100" />
+                                            </td>
+                                            <td><input type="hidden" name="name" value="@item.Name"> </td>
+                                            <td>
+                                                <input type="submit" class="btn btn-primary" value="Activate" name="submit" />
+                                                <a href="/Admin/Delete?name=@item.Name"><input type="button" class="btn btn-danger" style="margin-top:5px; width:76px" value="Delete" /></a>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </form>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+                            }
+    }
+
+
+    @{ if (ViewBag.Comments != null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 style="margin-top:10px">Comments:</h3>
+                        @{ foreach (var item in ViewBag.Comments)
+                            {
+                                if (item.Deleted == false)
+                                {
+                                <form method="post" action="/Admin/DeleteComm">
+                                    <table style="background-color:white; width:100%; border:solid; border-color:darkgray; margin-top:2px">
+                                        <tr>
+                                            <td class="col-md-3">
+                                                @item.Text
+                                            </td>
+                                            <td class="col-md-4">
+                                                Manifestation name: @item.Manifestation
+                                            </td>
+                                            <td class="col-md-2">
+                                                Rating: @item.Rating
+                                            </td>
+                                            <td><input type="hidden" name="id" value="@item.Id"> </td>
+                                            <td class="pull-right"><input type="submit" class="btn btn-danger" value="Delete" name="submit" /></td>
+                                        </tr>
+                                    </table>
+                                </form>
+                                    }
+                                }
+                            }
+</div>
+                </div>
+            </div>
+                            }
+    }
+
+    @{ if (ViewBag.AddSeller != null)
+        {
+            <form action="/Admin/AddSeller" method="post">
+                <table border="0" style="background-color:rgba(255,255,255,0.5) !important; border-radius: 10px;" class="container form-group top-right">
+                    <tr>
+                        <td colspan="2">
+                            Create profile
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Username
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="Username">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Password
+                        </td>
+                        <td>
+                            <input required type="password" class="form-control" name="Password">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Name
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="Name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Surname
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="Surname">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Gender
+                        </td>
+                        <td>
+                            <select name="Gender" class="form-control">
+                                <option value="Male">
+                                    Male
+                                </option>
+                                <option value="Female">
+                                    Female
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Date of birth
+                        </td>
+                        <td>
+                            <input type="date" class="form-control" name="BirthDate">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" value="Sign Up" class="btn btn-primary btn-block" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        }
+    }
+
+    @{if (ViewBag.customers != null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <table class="table table-hover" border="0" style="background-color:white; width:100%; border:solid; border-color:darkgray; margin-top:2px">
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Surname
+                                </th>
+                                <th>
+                                    Username
+                                </th>
+                                <th>
+                                    Gender
+                                </th>
+                                <th>
+                                    Points
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                            @foreach (var cust in ViewBag.customers)
+                            {
+                                if (cust.Deleted == false)
+                                {
+                                    <tr>
+                                        <td>
+                                            @cust.Name
+                                        </td>
+                                        <td>
+                                            @cust.Surname
+                                        </td>
+                                        <td>
+                                            @cust.Username
+                                        </td>
+                                        <td>
+                                            @cust.Gender
+                                        </td>
+                                        <td>
+                                            @cust.Points
+                                        </td>
+                                        <td>
+                                            <a href="/Admin/DeleteCustomer?username=@cust.Username" style="color:red">
+                                                <span class="glyphicon glyphicon-remove"></span> Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </table>
+                    </div>
+                    <div class="col-md-7">
+                        <form method="post" action="/Admin/Search">
+                            <table>
+                                <tr>
+                                    <th colspan="3" align="left">Search customers:</th>
+                                </tr>
+                                <tr>
+                                    <td>Name: </td>
+                                    <td><input type="text" class="form-control" name="Name" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Surname: </td>
+                                    <td><input type="text" class="form-control" name="Surname" /></td>
+                                </tr>
+                                <tr>
+                                    <td>Username: </td>
+                                    <td><input type="text" class="form-control" name="Username" /></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" align="center">
+                                        <input type="submit" style="margin-top:15px; margin-bottom:15px" value="Search" class="btn btn-success" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </form>
+                        <div class="col-md-5">
+                            <form method="post" action="/Admin/Sort">
+                                <table>
+                                    <tr>
+                                        <td class="col-md-3">Sort by: </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">Name ascending</td>
+                                        <td class="col-md-1"><input type="radio" name="radio" value="aName" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">Name descending</td>
+                                        <td class="col-md-1"><input type="radio" name="radio" value="dName" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">Surname ascending</td>
+                                        <td class="col-md-1"><input type="radio" name="radio" value="aSur" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">Surname descending</td>
+                                        <td class="col-md-1"><input type="radio" name="radio" value="dSur" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">Username ascending</td>
+                                        <td class="col-md-1"><input type="radio" name="radio" value="aUser" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">Username descending</td>
+                                        <td class="col-md-1"><input type="radio" name="radio" value="dUser" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">Points ascending</td>
+                                        <td class="col-md-1"><input type="radio" name="radio" value="aPoints" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">Points descending</td>
+                                        <td class="col-md-1"><input type="radio" name="radio" value="dPoints" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" align="center"><input type="submit" style="margin-top:5px" name="submit" class="btn btn-info" value="Sort" /></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="col-md-5">
+                            <div>
+                                Filter tickets by
+                                <p>&nbsp;</p>
+                                <form method="post" action="/Admin/Filter" class="form-group">
+                                    <table>
+                                        <tr>
+                                            <td><p style="margin-right:10px">Type: </p></td>
+                                            <td>
+                                                <select name="radio" class="form-control" style="width:110px">
+                                                    <option value="Golden">Golden</option>
+                                                    <option value="Silver">Silver</option>
+                                                    <option value="Bronze">Bronze</option>
+                                                </select>
+                                            </td>
+                                            <td><input type="submit" class="btn btn-danger" style="margin-left:10px" value="Filter" name="submit" /></td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+    @{ if (ViewBag.tickets != null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h3 style="margin-top:10px">Tickets:</h3>
+                        <h2 class="text-danger text-center">@ViewBag.error</h2>
+                        @{ foreach (var item in ViewBag.tickets)
+                            {
+                                if (item.Deleted == false)
+                                {
+                                    <table style="background-color:aquamarine; width:100%; border:solid; border-color:darkgray; margin-top:2px">
+                                        <tr>
+                                            <td width="400">
+                                                <p>Manifestation: @item.Manifestation </p>
+                                                <p>Price: @item.Price</p>
+                                                <p>Date: @item.Time</p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+                            }
+    }
+
+
+    @{if (ViewBag.sellers != null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-hover" border="0" style="background-color:white; width:100%; border:solid; border-color:darkgray; margin-top:2px">
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Surname
+                                </th>
+                                <th>
+                                    Username
+                                </th>
+                                <th>
+                                    Gender
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                            @foreach (KeyValuePair<string, Seller> kv in ViewBag.sellers)
+                            {
+                                if (kv.Value.Deleted == false)
+                                {
+                                    <tr>
+                                        <td>
+                                            @kv.Value.Name
+                                        </td>
+                                        <td>
+                                            @kv.Value.Surname
+                                        </td>
+                                        <td>
+                                            @kv.Value.Username
+                                        </td>
+                                        <td>
+                                            @kv.Value.Gender
+                                        </td>
+                                        <td>
+                                            <a href="/Admin/DeleteSeller?username=@kv.Value.Username" style="color:red">
+                                                <span class="glyphicon glyphicon-remove"></span> Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+</body>
+</html>

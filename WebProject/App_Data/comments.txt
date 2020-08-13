@@ -1,0 +1,4 @@
+sadsa;Dunjs;Concert;Great concert!;5;True;Active
+htgrh;Dunjs;Concert;Very good!;4;False;Active
+g1x26;Dunjs;Film;ssasaassa s !!!!;2;True;Active
+w9x5v;Dunjs;Concert;Odlican koncert;2;True;Active

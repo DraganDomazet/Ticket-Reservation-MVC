@@ -1,0 +1,73 @@
+﻿@using WebProject.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Manifestation</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta name="description" content="The description of my page" />
+</head>
+<body style="background-color: antiquewhite;  margin:10px">
+    <div class="container-fluid btn-toolbar">
+
+        <a href="/Start/Index" class="btn btn-primary pull-right" style="margin-left:5px"> Home </a>
+        <a href="/Fests/Index" class="btn btn-default pull-right"> Active manifestations</a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h3 style="margin-top:10px">Manifestation: @ViewBag.Fest.Name</h3>
+                @{ var item = ViewBag.Fest;
+                    {
+
+                        <table style="background-color:white; width:100%; border:solid; border-color:darkgray; margin-top:2px">
+                            <tr>
+                                <td>
+                                    <p>Type: @item.Type</p><p>Name: @item.Name </p><p> Price: @item.Price</p><p> Number of seats: @item.Seats</p>
+                                    <p>City: @item.Address.City @item.Address.Zip</p>
+                                </td>
+                                <td>
+                                    <p>Address: @item.Address.Street @item.Address.Number</p>
+                                    <p>Date: @item.DateTime</p><p>Number of Vip tickets : @item.NumVip</p>
+                                    <p>Number of Regular tickets : @item.NumReg</p>
+                                    <p>Number of Fan Pit tickets : @item.NumFan</p>
+                                    @if (ViewBag.rats[item.Name] != null)
+                                    {
+                                        <p> Average rating: @ViewBag.rats[item.Name] </p>
+                                    }
+                                </td>
+                                <td width="140">
+                                    <img class="img-rounded" src="~/Images/@item.Picture" style="display:block; width:100%" />
+                                </td>
+                            </tr>
+                            @foreach (var comm in ViewBag.comments)
+                            {
+                                if (comm.Status == Status.Active)
+                                {
+                                    if (comm.Manifestation == item.Name)
+                                    {
+                                    <tr style="border-top:solid; border-top-color:darkgray;">
+                                        <td>Comment:</td>
+                                        <td colspan="2"><p>@comm.Text</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rating:</td>
+                                        <td colspan="2"><p>@comm.Rating</p></td>
+                                    </tr>
+                                    }
+                                }
+                            }
+                        </table>
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

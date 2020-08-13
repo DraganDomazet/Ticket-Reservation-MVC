@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LogIn</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="background-image:url('../../Pictures/ticket.jpg'); background-repeat: no-repeat; background-size: cover; margin: 5px;">
+    <div class="container-fluid">
+        <a href="/Start/Index" class="btn btn-default pull-left"><span class="glyphicon glyphicon-home"></span> Home </a>
+    </div>    
+    <form action="/Start/Login" method="post">
+        <table border="0" style="background-color:rgba(255,255,255,0.8) !important;  border-radius: 10px;" class="form-group top-right pull-right text-primary">
+            <tr>
+                <td>
+                    Username:
+                </td>
+                <td>
+                    <input type="text" class="form-control" name=username>
+                </td>
+
+                <td>
+                    Password:
+                </td>
+                <td>
+                    <input type="password" class="form-control" name=password>
+                </td>
+
+                <td>
+                    <input type="submit" class="btn btn-primary" value="Log In" />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="text-danger text-right pull-right">@ViewBag.un</td>
+                <td></td>
+                <td class="text-danger text-right pull-right">@ViewBag.error</td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

@@ -1,0 +1,6 @@
+Concert;Concert;21;6/3/2021 8:52:00 PM;1000;Active;Lukijana Muscikog;2;Novi Sad;21000;concert1.jpg;False;7;9;5
+Film;Festival;36;11/2/2020 9:38:00 PM;250;Active;Nerodimska;18;Beograd;11000;film.jpg;False;12;12;12
+Film1;Concert;30;1/1/2021 12:00:00 AM;2400;Active;Vrbaska;21;Vrbas;1221;film1.jpg;False;3;10;10
+Film2;Concert;36;1/1/0001 12:00:00 AM;2122;Inactive;Secer sokak;2211;Sremska Mitrovica;22000;film2.jpg;False;12;12;12
+BeerFest;Festival;34;7/24/2020 2:19:00 AM;500;Active;Dusana Vukasovica;84;Beograd;11000;beer.jpg;False;4;18;12
+90s;Theater;23;7/30/2020 11:51:00 AM;380;Inactive;Dusana Vukasovica;14;Beograd;11000;P6230095.JPG;True;4;12;7

@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta name="description" content="The description of my page" />
+</head>
+
+
+<body style="background-image:url('../../Pictures/ticket.jpg'); background-repeat: no-repeat; background-size: cover">
+    <nav class="navbar navbar-inverse ">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Welcome to Gigstickets!</a>
+            </div>            
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/Start/LogIn"><span class="glyphicon glyphicon-user"></span> Log In</a></li>
+                <li><a href="/Start/Register"><span class="glyphicon glyphicon-log-in"></span> Sign Up</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <h2 style="background-color:white" class="text-danger">@ViewBag.signed</h2>
+
+    <div>
+        <a href="/Fests/Index" style="margin-left: 10px" class="btn btn-success pull-left"> Show active manifestations </a>
+    </div>
+</body>
+</html>

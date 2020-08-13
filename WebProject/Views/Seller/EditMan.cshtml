@@ -1,0 +1,118 @@
+﻿@using WebProject.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta name="description" content="The description of my page" />
+</head>
+<body style="background-color: antiquewhite; background-repeat: no-repeat; background-size: cover; margin-top: 5px;">
+    <div class="container-fluid btn-toolbar">
+        <a href="/Customer/Logout" class="btn btn-danger pull-right"> Log out </a>
+        <a href="/Customer/Index" class="btn btn-default pull-left"><span class="glyphicon glyphicon-home"></span> Home </a>
+    </div>
+        
+    <form action="/Seller/EditManifestation" method="post">
+        @{var item = ViewBag.Fest;
+            <table border="0" style="background-color:rgba(255,255,255,0.7) !important; margin:auto;  border-radius: 10px;" class="form-group top-left">
+                <tr>
+                    <td>
+                        Name
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" value="@item.Name" name="Name">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Type of festival
+                    </td>
+                    <td>
+                        <select name="Type" class="form-control">
+                            <option selected value="Concert">
+                                Concert
+                            </option>
+                            <option value="Festival">
+                                Festival
+                            </option>
+                            <option value="Theater">
+                                Theater
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Number of seats
+                    </td>
+                    <td>
+                        <input class="form-control" type="number" value="@item.Seats" name="Seats">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Date and time
+                    </td>
+                    <td>
+                        <input type="datetime-local" class="form-control" value="@item.DateTime" name="DateTime">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Price
+                    </td>
+                    <td>
+                        <input class="form-control" type="number" value="@item.Price" name="Price">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Street
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" value="@item.Address.Street" name="Street">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Number
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" value="@item.Address.Number" name="Number">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        City
+                    </td>
+                    <td>
+                        <input type="text" class="form-control"  value="@item.Address.City" name="City">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Zip
+                    </td>
+                    <td>
+                        <input type="number" class="form-control"  value="@item.Address.Zip" name="Zip">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center">
+                        <input type="submit" value="Save changes" class="btn btn-success" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </form>
+</body>
+</html>

@@ -1,0 +1,280 @@
+﻿@using WebProject.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta name="description" content="The description of my page" />
+</head>
+<body style="background-color: antiquewhite; background-repeat: no-repeat; background-size: cover; margin: 10px;">
+    <div class="container-fluid btn-toolbar">
+        <a href="/Seller/Logout" class="btn btn-danger pull-right" style="margin-left:5px"><span class="glyphicon glyphicon-log-out"></span> Log out </a>
+        <a href="/Seller/Show" class="btn btn-primary pull-right" style="margin-left:5px"><span class="glyphicon glyphicon-info-sign"></span> Show my manifestations </a>
+        <a href="/Seller/Tickets" class="btn btn-primary pull-right" style="margin-left:5px"><span class="glyphicon glyphicon-info-sign"></span> Show tickets </a>
+        <a href="/Seller/Index" class="btn btn-default pull-left"><span class="glyphicon glyphicon-home"></span> Home </a>
+        <a href="/Seller/Edit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-edit"></span> Edit </a>       
+        <a href="/Seller/AddM" class="btn btn-warning pull-right"><span class="glyphicon glyphicon-adjust"></span> Add Manifestation </a>
+        <a href="/Seller/Comments" class="btn btn-info pull-right"><span class="glyphicon glyphicon-comment"></span> Comments </a>
+
+    </div>
+    <h2 class="text-center">Welcome, @(((User)Session["user"]).Name) @(((User)Session["user"]).Surname)</h2>
+    <h2 class="text-danger">@ViewBag.Error</h2>
+    @{ if (ViewBag.name != null)
+        {
+            <h3 class="text-primary text-center">@ViewBag.name</h3>
+        }
+    }
+
+    @{ if (ViewBag.Show != null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 style="margin-top:10px">Manifestations:</h3>
+                        @{ foreach (var item in ViewBag.Fests)
+                            {
+                                <form method="post" action="/Seller/EditMan">
+                                    <table style="background-color:white; width:100%; border:solid; border-color:darkgray; margin-top:2px">
+                                        <tr>
+                                            <td width="400">
+                                                <p>@item.Type: @item.Name  <text class="pull-right"> Price: @item.Price</text></p><p>
+                                                    Address: @item.Address.Street @item.Address.Number
+                                                    <text class="pull-right">Status: @item.Status</text>
+                                                </p><p>Date: @item.DateTime</p>
+                                            </td>
+                                            <td width="140">
+                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Click to see details!">
+                                                    <img class="img-rounded" src="~/Images/@item.Picture" width="130" height="100" />
+                                                </a>
+                                            </td>
+                                            <td><input type="hidden" name="name" value="@item.Name"> </td>
+                                            <td><input type="submit" class="btn btn-danger" value="Edit" name="submit" /></td>
+
+                                        </tr>
+                                    </table>
+
+                                </form>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+                            }
+    }
+
+    @{ if (ViewBag.Comments != null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 style="margin-top:10px">Comments:</h3>
+                        @{ foreach (var item in ViewBag.Comments)
+                            {
+                                <form method="post" action="/Seller/Aprove">
+                                    <table style="background-color:white; width:100%; border:solid; border-color:darkgray; margin-top:2px">
+                                        <tr>
+                                            <td class="col-md-3">
+                                                @item.Text
+                                            </td>
+                                            <td class="col-md-4">
+                                                Manifestation name: @item.Manifestation
+                                            </td>
+                                            <td class="col-md-2">
+                                                Rating: @item.Rating
+                                            </td>
+                                            <td><input type="hidden" name="id" value="@item.Id"> </td>
+                                            <td class="pull-right"><input type="submit" class="btn btn-danger" value="Aprove" name="submit" /></td>
+                                        </tr>
+                                    </table>
+
+                                </form>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+                            }
+    }
+
+
+    @{ if (ViewBag.tickets != null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h3 style="margin-top:10px">Tickets:</h3>
+                        <h2 class="text-danger text-center">@ViewBag.error</h2>
+                        @{ foreach (var item in ViewBag.tickets)
+                            {
+                                if (item.Deleted == false)
+                                {
+                                    <table style="background-color:aquamarine; width:100%; border:solid; border-color:darkgray; margin-top:2px">
+                                        <tr>
+                                            <td width="400">
+                                                <p>Manifestation: @item.Manifestation </p>
+                                                <p>Price: @item.Price</p>
+                                                <p>Date: @item.Time</p>
+                                            </td>                                            
+                                        </tr>
+                                    </table>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+                            }
+    }
+
+
+    @{ if (ViewBag.AddM != null)
+        {
+            <form action="/Seller/AddManifestation" method="post" enctype="multipart/form-data">
+                <table border="0" style="background-color:rgba(255,255,255,0.5) !important;" class="container form-group top-right">
+                    <tr>
+                        <td colspan="2">
+                            Create Manifestation
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Name
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="Name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Type
+                        </td>
+                        <td>
+                            <select name="Type" class="form-control">
+                                <option value="Concert">
+                                    Concert
+                                </option>
+                                <option value="Festival">
+                                    Festival
+                                </option>
+                                <option value="Theater">
+                                    Theater
+                                </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Seats
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="Seats">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Date
+                        </td>
+                        <td>
+                            <input type="datetime-local" class="form-control" name="DateTime">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Price
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="Price">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Street
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="Street">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Number
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="Number">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            City
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" name="City">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Zip
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="Zip">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            VIP tickets
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="NumVip">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            REGULAR tickets
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="NumReg">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            FAN PIT tickets
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" name="NumFan">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td> Picture</td>
+                        <td>
+                            <input type="file" class="form-control" name="file" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" value="Sign Up" class="btn btn-primary btn-block" />
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        }
+    }
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>LogIn</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="background-image:url('../../Pictures/ticket.jpg'); background-repeat: no-repeat; background-size: cover; margin:10px">
+    <div class="container-fluid">
+        <a href="/Start/Index" class="btn btn-default pull-left"><span class="glyphicon glyphicon-home"></span> Home </a>
+    </div>
+    
+    <form action="/Start/SignUp" method="post">
+        <table border="0" style="background-color:rgba(255,255,255,0.7) !important;" class="container form-group text-primary">
+            <tr>
+                <td  colspan="2">
+                    <p class="text-danger"> @ViewBag.Error</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Create profile
+                </td>
+            </tr>        
+            <tr>
+                <td>
+                    Username
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="Username">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password
+                </td>
+                <td>
+                    <input required type="password" class="form-control" name="Password">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="Name">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Surname
+                </td>
+                <td>
+                    <input type="text" class="form-control" name="Surname">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Gender
+                </td>
+                <td>
+                    <select name="Gender" class="form-control">
+                        <option value="Male">
+                            Male
+                        </option>
+                        <option value="Female">
+                            Female
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Date of birth
+                </td>
+                <td>
+                    <input type="date" class="form-control" name="BirthDate">
+                </td>
+            </tr>            
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="Sign Up"  class="btn btn-primary btn-block" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

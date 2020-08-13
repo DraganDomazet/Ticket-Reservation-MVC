@@ -1,0 +1,138 @@
+﻿@using WebProject.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta name="description" content="The description of my page" />
+</head>
+<body style="background-color: antiquewhite; background-repeat: no-repeat; background-size: cover; margin: 10px;">
+    <div class="container-fluid btn-toolbar">
+        <a href="/Customer/Logout" class="btn btn-warning pull-right" style="margin-left:5px"><span class="glyphicon glyphicon-log-out"></span> Log out </a>
+        <a href="/Customer/Edit" class="btn btn-success pull-right"><span class="glyphicon glyphicon-edit"></span> Edit </a>
+        <a href="/Customer/Show" class="btn btn-primary pull-right" style="margin-left:5px"><span class="glyphicon glyphicon-info-sign"></span> Active manifestations </a>
+        <a href="/Customer/Index" class="btn btn-default pull-left"><span class="glyphicon glyphicon-home"></span> Home </a>
+        <a href="/Customer/Tickets" class="btn btn-success pull-right"><span class="glyphicon glyphicon-edit"></span> All tickets </a>
+
+    </div>
+    <h2 class="text-center">Welcome, @(((User)Session["user"]).Name) @(((User)Session["user"]).Surname)</h2>
+    <h2 class="text-danger">@ViewBag.Error</h2>
+    <div class="container">
+        <div class="row">
+            @{ if (ViewBag.Show != null)
+                {
+                    <div class="col-md-12">
+                        <h3 style="margin-top:10px">Manifestations: </h3>                        
+                        <h2 class="text-danger">@ViewBag.Res</h2>
+                        @{ foreach (var item in ViewBag.Fests)
+                            {
+                                if (item.Status == WebProject.Models.Status.Active)
+                                {
+                                    <div class="col-md-8">
+                                        <form method="post" action="/Customer/Cart" class="form-group" style="margin-bottom:0; margin-top:10px">
+                                            <table style="background-color:white; width:100%; border:solid; border-color:darkgray;">
+                                                <tr>
+                                                    <td width="500">
+                                                        <p>@item.Type: @item.Name  <text class="pull-right"> Price: @item.Price</text></p><p>
+                                                            @item.Address.City, @item.Address.Street @item.Address.Number
+                                                            <text class="pull-right">Status: @item.Status</text>
+                                                        </p><p>Date: @item.DateTime</p>
+                                                    </td>
+                                                    <td width="140">
+                                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Click to see details!">
+                                                            <img class="img-rounded" src="~/Images/@item.Picture" width="130" height="100" />
+                                                        </a>
+                                                    </td>
+                                                    <td class="col-xs-2">
+                                                        <select name="tip" class="form-control">
+                                                            <option selected value="Vip">Vip</option>
+                                                            <option value="Regular">Regular</option>
+                                                            <option value="FanPit">Fan pit</option>
+                                                        </select>
+                                                    </td>
+                                                    <td style="width:70px"><input type="number" name="count" value="1" style="text-align:center" class="form-control" /></td>
+                                                    <td><input type="hidden" name="name" value="@item.Name"> </td>
+                                                    <td>
+                                                        <input type="submit" class="btn btn-primary" value="Reserve" name="submit" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                        @{ foreach (var comm in ViewBag.Comments)
+                                            {
+                                                if (comm.Manifestation == item.Name)
+                                                {
+                                                    if (comm.Status == Status.Active)
+                                                    {
+                                                    <table style="background-color:white; width:100%; border:solid; border-color:darkgray;">
+                                                        <tr>
+                                                            <td>Comment: @comm.Text</td>
+                                                            <td class="pull-right">Rating:  @comm.Rating</td>
+                                                        </tr>
+                                                    </table>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                    </div>
+                                    <div class="col-md-4">
+                                        <form method="post" action="/Customer/Comment" style="margin-top:10px">
+                                            <table style="background-color:white; width:100%; height:105px; border:solid; border-color:darkgray;">
+                                                <tr>
+                                                    <td colspan="2">Add comment for manifestation: @item.Name</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <input type="hidden" name="manifestation" value="@item.Name" />
+                                                        <input type="text" name="text" class="form-control" />
+                                                    </td>
+                                                    <td>
+                                                        <select name="rating" class="form-control">
+                                                            <option selected value="5">5</option>
+                                                            <option value="4">4</option>
+                                                            <option value="3">3</option>
+                                                            <option value="2">2</option>
+                                                            <option value="1">1</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <input type="submit" value="Add comment" class="btn btn-info pull-right" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                                }
+
+                                            }
+                        }
+                    </div>
+
+                                            }
+            }
+
+            @{ if (ViewBag.Cart != null)
+                {
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <h class="text-info">Do you want to confirm reservation of @ViewBag.count tickets with total price of @ViewBag.cost ?</h>
+                                <a href="/Customer/Reserve"><input type="button" class="btn btn-danger" style="margin-top:5px; width:76px" value="Confirm" /></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</body>
+
+</html>

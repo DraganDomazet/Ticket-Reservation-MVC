@@ -1,0 +1,128 @@
+﻿
+
+@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <meta name="description" content="The description of my page" />
+</head>
+<body style="background-color: antiquewhite; margin:10px">
+    <div class="container-fluid btn-toolbar">
+        <a href="/Start/Index" class="btn btn-primary pull-left" style="margin:10px"> Home </a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <h3 style="margin-top:10px">Manifestations:</h3>
+                @{ foreach (var item in ViewBag.fests)
+                    {
+                        <table style="background-color:white; width:100%; border:solid; border-color:darkgray; margin-top:2px">
+                            <tr>
+                                <td width="400">
+                                    <p>@item.Type: @item.Name  <text class="pull-right"> Price: @item.Price</text></p>
+                                    <p>Address: @item.Address.Street @item.Address.Number</p><p>Date: @item.DateTime</p>                                    
+                                </td>
+                                <td width="140">
+                                    <a href="/Fests/Details?name=@item.Name" data-toggle="tooltip" data-placement="top" title="Click to see details!">
+                                        <img class="img-rounded" src="~/Images/@item.Picture" width="130" height="100" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                }
+            </div>
+            <div class="col-md-7" style="margin-top:43px">
+                <form method="post" action="/Fests/Search">
+                    <table>
+                        <tr>
+                            <th colspan="3" align="left">Search manifestations:</th>
+                        </tr>
+                        <tr>
+                            <td>Manifestation name: </td>
+                            <td><input type="text" class="form-control" name="Name" /></td>
+                        </tr>
+                        <tr>
+                            <td>City: </td>
+                            <td><input type="text" class="form-control" name="City" /></td>
+                        </tr>
+                        <tr>
+                            <td>Start date and finish date: </td>
+                            <td><input type="date" class="form-control" name="StartDate" /></td>
+                            <td><input type="date" class="form-control" name="EndDate" /></td>
+                        </tr>
+                        <tr>
+                            <td>Price: </td>
+                            <td><input type="number" class="form-control" name="StartPrice" /></td>
+                            <td><input type="number" class="form-control" name="EndPrice" /></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="3" align="center">
+                                <input type="submit" style="margin-top:15px; margin-bottom:15px" value="Search" class="btn btn-success" />
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+                <div class="col-md-5">
+                    <form method="post" action="/Fests/Sort">
+                        <table>
+                            <tr>
+                                <td class="col-md-3">Sort by: </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-3">Name ascending</td>
+                                <td class="col-md-1"><input type="radio" name="radio" value="aName" /></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-3">Name descending</td>
+                                <td class="col-md-1"><input type="radio" name="radio" value="dName" /></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-3">First newest</td>
+                                <td class="col-md-1"><input type="radio" name="radio" value="dDate" /></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-3">First oldest</td>
+                                <td class="col-md-1"><input type="radio" name="radio" value="aDate" /></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-3">Price descending</td>
+                                <td class="col-md-1"><input type="radio" name="radio" value="dPrice" /></td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-3">Price ascending</td>
+                                <td class="col-md-1"><input type="radio" name="radio" value="aPrice" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center"><input type="submit" style="margin-top:5px" name="submit" class="btn btn-info" value="Sort" /></td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <div>
+                        Filter by:
+                        <form method="post" action="/Fests/Filter" class="form-group">
+                            <select name="radio" class="form-control">
+                                <option value="Concert">Concerts</option>
+                                <option value="Festival">Festivals</option>
+                                <option value="Theater">Theaters</option>
+                            </select>
+                            <input type="submit" class="btn btn-danger" style="margin-top:105px; margin-left:70px" value="Filter" name="submit" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

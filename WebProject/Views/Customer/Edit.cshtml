@@ -1,0 +1,101 @@
+﻿@using WebProject.Models
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="background-color: antiquewhite; background-repeat: no-repeat; background-size: cover; margin-top: 5px;">
+    <div class="container-fluid btn-toolbar">
+        <a href="/Admin/Logout" class="btn btn-danger pull-right"> Log out </a>
+        <a href="/Admin/ShowCustomers" class="btn btn-primary pull-right"> Show all customers </a>
+        <a href="/Admin/Index" class="btn btn-default pull-left"><span class="glyphicon glyphicon-home"></span> Home </a>
+    </div>
+    <h2 class="text-danger">@ViewBag.Error</h2>
+    <form action="/Customer/EditCustomer" method="post">
+        <table border="0" style="background-color:rgba(255,255,255,0.7) !important; margin:auto;  border-radius: 10px;" class="form-group top-left">
+            <tr>
+                <td>
+                    Username
+                </td>
+                <td>
+                    <input type="text" class="form-control" value="@(((User)Session["user"]).Username)" name="Username">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password
+                </td>
+                <td>
+                    <input required class="form-control" type="password" name="Password">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Name
+                </td>
+                <td>
+                    <input type="text" class="form-control" value="@(((User)Session["user"]).Name)" name="Name">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Surname
+                </td>
+                <td>
+                    <input type="text" class="form-control" value="@(((User)Session["user"]).Surname)" name="Surname">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Gender
+                </td>
+                <td>
+                    <select name="Gender" class="form-control">
+                        @if ((((User)Session["user"]).Gender) == Gender.Male)
+                        {
+                            <option selected value="Male">
+                                Male
+                            </option>
+                            <option value="Female">
+                                Female
+                            </option>
+                        }
+                        else
+                        {
+                            <option value="Male">
+                                Male
+                            </option>
+                            <option selected value="Female">
+                                Female
+                            </option>
+                        }
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Date of birth
+                </td>
+                <td>
+                    <input type="date" class="form-control"  value="@(((User)Session["user"]).BirthDate)" name="BirthDate">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Save changes" class="btn btn-success" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
